@@ -12,22 +12,22 @@ public class Main {
 
 
         //Linear random service with a valid distribution
-        linealRandomService.setSize(50);
-        linealRandomService.buildRandomNumberWithSeedConstIncrementAndModule(5, 5, 1, 16);
+        linealRandomService.setSize(Short.MAX_VALUE);
+        linealRandomService.buildRandomNumbers();
         linealRandomService.evaluatePseudoNumbers();
         linealRandomService.hasValidPseudoNumbersDistribution();
 
-
+/*
         //13 random numbers generated with invalid distribution
         cuadraticService.setSize(50);
-        cuadraticService.buildRandomNumbersWithSeed(3479);
+        cuadraticService.buildRandomNumbers();
         cuadraticService.evaluatePseudoNumbers();
         cuadraticService.hasValidPseudoNumbersDistribution();
         cuadraticService.clearBuild();
 
         //7 random number generated with invalid distribution
         cuadraticService.setSize(50);
-        cuadraticService.buildRandomNumbersWithSeed(1235);
+        cuadraticService.buildRandomNumbers();
         cuadraticService.evaluatePseudoNumbers();
         cuadraticService.hasValidPseudoNumbersDistribution();
         cuadraticService.clearBuild();
@@ -35,10 +35,10 @@ public class Main {
 
         //50 random number generated with valid distribution
         cuadraticService.setSize(50);
-        cuadraticService.buildRandomNumbersWithSeed(1111);
+        cuadraticService.buildRandomNumbers();
         cuadraticService.evaluatePseudoNumbers();
         cuadraticService.hasValidPseudoNumbersDistribution();
         cuadraticService.clearBuild();
-
+*/
     }
 }

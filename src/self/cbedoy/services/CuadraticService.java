@@ -8,11 +8,19 @@ import java.util.List;
  */
 public class CuadraticService extends RandomService
 {
+    private int mSeed;
     public CuadraticService(Class className) {
         super(className);
     }
 
-    public void buildRandomNumbersWithSeed(int seed) throws Exception
+    @Override
+    public void buildRandomNumbers() {
+        while (String.valueOf(mSeed).length() < 4){
+            mSeed = mRandom.nextInt();
+        }
+    }
+
+    private void buildRandomNumbersWithSeed(int seed) throws Exception
     {
         if(String.valueOf(seed).length() >= 4)
         {

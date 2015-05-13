@@ -1,6 +1,7 @@
 package self.cbedoy.services;
 
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by Carlos Bedoy on 08/05/2015.
@@ -10,9 +11,11 @@ public abstract class RandomService
     protected List<Double> mRandomNumbers;
     protected double mAverange;
     protected int mSize;
+    protected Random mRandom;
 
     public RandomService(Class className){
         System.out.println("Init >> "+className.getCanonicalName());
+        mRandom = new Random(Short.MAX_VALUE);
     }
 
     public void setSize(int size) {
@@ -45,4 +48,6 @@ public abstract class RandomService
             mAverange = -1;
         }
     }
+
+    public abstract void buildRandomNumbers();
 }
