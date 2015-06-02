@@ -1,44 +1,42 @@
 package self.cbedoy;
 
-import self.cbedoy.services.CuadraticService;
+import self.cbedoy.services.CityBuilder;
 import self.cbedoy.services.LinealRandomService;
+import self.cbedoy.services.Population;
+
+import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] cbedoy) throws Exception {
 
+
+        /*
         LinealRandomService linealRandomService = new LinealRandomService(LinealRandomService.class);
-        CuadraticService cuadraticService       = new CuadraticService(CuadraticService.class);
 
+        Scanner scanner = new Scanner(System.in);
 
-        //Linear random service with a valid distribution
-        linealRandomService.setSize(Short.MAX_VALUE);
+        System.out.println("Give N>>");
+
+        int n = scanner.nextInt();
+
+        linealRandomService.setSize(n);
         linealRandomService.buildRandomNumbers();
-        linealRandomService.evaluatePseudoNumbers();
-        linealRandomService.hasValidPseudoNumbersDistribution();
 
-/*
-        //13 random numbers generated with invalid distribution
-        cuadraticService.setSize(50);
-        cuadraticService.buildRandomNumbers();
-        cuadraticService.evaluatePseudoNumbers();
-        cuadraticService.hasValidPseudoNumbersDistribution();
-        cuadraticService.clearBuild();
+        */
 
-        //7 random number generated with invalid distribution
-        cuadraticService.setSize(50);
-        cuadraticService.buildRandomNumbers();
-        cuadraticService.evaluatePseudoNumbers();
-        cuadraticService.hasValidPseudoNumbersDistribution();
-        cuadraticService.clearBuild();
+        //CityBuilder cityBuilder = new CityBuilder();
 
 
-        //50 random number generated with valid distribution
-        cuadraticService.setSize(50);
-        cuadraticService.buildRandomNumbers();
-        cuadraticService.evaluatePseudoNumbers();
-        cuadraticService.hasValidPseudoNumbersDistribution();
-        cuadraticService.clearBuild();
-*/
+        //LinealRandomService linealRandomService = new LinealRandomService();
+        //linealRandomService.setSize(50);
+        //linealRandomService.buildRandomNumbers();
+
+
+        Population population = new Population();
+
+
+
+
     }
 }
