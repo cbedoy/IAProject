@@ -1,11 +1,13 @@
 package self.cbedoy.main;
 
 import self.cbedoy.builders.CityBuilder;
-import self.cbedoy.builders.InitialPopulation;
+import self.cbedoy.builders.InitialPopulationBuilder;
 import self.cbedoy.builders.PMXBuilder;
 import self.cbedoy.services.MutationService;
 import self.cbedoy.services.SelectionService;
 import self.cbedoy.utils.Utils;
+
+import java.util.Scanner;
 
 /**
  * Created by Carlos Bedoy on 17/06/2015.
@@ -15,26 +17,32 @@ public class Main
 {
     public static void main(String[]args)
     {
-        Utils utils = new Utils();
+
+        Scanner scanner = new Scanner(System.in);
+        int nGeneration = 1;
+        int currentGeneration = 0;
+
+        //System.out.println("Please input the number of generations");
+        //nGeneration = scanner.nextInt();
+
 
         //Load Cities and manage
         CityBuilder cityBuilder = new CityBuilder();
 
         //Create the initial population
-        InitialPopulation initialPopulation = new InitialPopulation();
-        initialPopulation.setCityBuilder(cityBuilder);
-        initialPopulation.createPopulation();
+        InitialPopulationBuilder initialPopulationBuilder = new InitialPopulationBuilder();
+        initialPopulationBuilder.setCityBuilder(cityBuilder);
+        initialPopulationBuilder.createPopulation();
 
         //Get initial population
-        int[][] population = initialPopulation.getPopulation();
-
+        int[][] initialPopulation = initialPopulationBuilder.getPopulation();
         //Get initial distances vector by obtain the best chromosome
-        float[] distancesVector = initialPopulation.getDistancesVector();
+        float[] distancesVector = initialPopulationBuilder.getDistancesVector();
 
         //Process by selected the two best chromosomes
         SelectionService selectionService = new SelectionService();
         selectionService.setDistanceVector(distancesVector);
-        selectionService.setPopulationMatrix(population);
+        selectionService.setPopulationMatrix(initialPopulation);
         selectionService.initSelection();
 
         //Obtain best Parent One
@@ -44,23 +52,26 @@ public class Main
         int[] bestParentTwo = selectionService.getBestParentTwo();
 
         //Print chromosome
-        utils.printChromosomeWithTitle(bestParentOne, "Best Parent One before cut point");
-        utils.printChromosomeWithTitle(bestParentTwo, "Best Parent Two before cut point");
+        Utils.printChromosomeWithTitle(bestParentOne, "Best Parent One before cut point");
+        Utils.printChromosomeWithTitle(bestParentTwo, "Best Parent Two before cut point");
 
-        int[] bestParentOneToEvaluate = utils.removeOnesFromChromosome(bestParentOne);
-        int[] bestParentTwoToEvaluate = utils.removeOnesFromChromosome(bestParentTwo);
+        bestParentOne = Utils.removeOnesFromChromosome(bestParentOne);
+        bestParentTwo = Utils.removeOnesFromChromosome(bestParentTwo);
 
         //Determine and generate cut point
-        PMXBuilder pmxBuilder = new PMXBuilder(bestParentOneToEvaluate, bestParentTwoToEvaluate);
+        PMXBuilder pmxBuilder = new PMXBuilder(bestParentOne, bestParentTwo);
 
         //Obtain offspring One
-        int[] offspringOne = pmxBuilder.get_offspring1();
+        int[] offspringOne = pmxBuilder.getOffspringOne();
         //Obtain offspring Two
-        int[] offspringTwo = pmxBuilder.get_offspring2();
+        int[] offspringTwo = pmxBuilder.getOffspringTwo();
+
+        offspringOne = Utils.fillWithLessOnesToChromosome(offspringOne);
+        offspringTwo = Utils.fillWithLessOnesToChromosome(offspringTwo);
 
         //Print chromosome
-        utils.printChromosomeWithTitle(offspringOne, "Offspring One Generated with PMX");
-        utils.printChromosomeWithTitle(offspringOne, "Offspring Two Generated with PMX");
+        Utils.printChromosomeWithTitle(offspringOne, "Offspring One Generated with PMX");
+        Utils.printChromosomeWithTitle(offspringTwo, "Offspring Two Generated with PMX");
 
         //Mutate service
         MutationService mutationService = new MutationService();
@@ -71,8 +82,8 @@ public class Main
         //Mutate second chromosome
         int[] mutateChromosomeTwo = mutationService.mutateChromosome(offspringTwo);
 
-        utils.printChromosomeWithTitle(mutateChromosomeOne, "Mutated chromosome One");
+        Utils.printChromosomeWithTitle(mutateChromosomeOne, "Mutated chromosome One");
 
-        utils.printChromosomeWithTitle(mutateChromosomeTwo, "Mutated chromosome Two");
+        Utils.printChromosomeWithTitle(mutateChromosomeTwo, "Mutated chromosome Two");
     }
 }

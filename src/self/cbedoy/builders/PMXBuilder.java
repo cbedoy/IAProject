@@ -51,17 +51,8 @@ public class PMXBuilder
 
     }
 
-    public int get_cutPoint1()   { return cutPoint1;  } // For Testing Purposes //
-    public int get_cutPoint2()   { return cutPoint2;  } // For Testing Purposes //
-
-    public int[] get_segment1()  { return segment1;   } // For Testing Purposes //
-    public int[] get_segment2()  { return segment2;   } // For Testing Purposes //
-
-    public int[] get_parent1()   { return parent1;    }
-    public int[] get_parent2()   { return parent2;    }
-
-    public int[] get_offspring1(){ return offspring1; }
-    public int[] get_offspring2(){ return offspring2; }
+    public int[] getOffspringOne(){ return offspring1; }
+    public int[] getOffspringTwo(){ return offspring2; }
 
     // For an Element given by its index check that it doesn't appear twice //
     private boolean check_forDuplicates(int [] offspring, int indexOfElement){
@@ -87,7 +78,6 @@ public class PMXBuilder
     }
 
     private void create_Segments(int cutPoint1, int cutPoint2){
-        System.out.println("Created segments");
         int capacity_ofSegments = (cutPoint2 - cutPoint1) + 1;
         segment1 = new int[capacity_ofSegments];
         segment2 = new int[capacity_ofSegments];
@@ -114,7 +104,6 @@ public class PMXBuilder
 
     // offspring2 gets segment 1, offspring1 gets segment2 //
     public void crossOver(int [] offspring, int[] parentX, int[] parentY){
-        System.out.println("Crossover");
         if(offspring == offspring1){
             int[] segment = segment2;
             insert_Segments(offspring, segment);
@@ -138,32 +127,5 @@ public class PMXBuilder
                 }
             }
         }
-    }
-
-    public void printOffspring(int [] offspring1, int [] offspring2){
-        System.out.println(" ");
-        System.out.println("Parents");
-        System.out.println("");
-        for(int parent1Index = 0; parent1Index < parent1.length; parent1Index++){
-            System.out.print(" " + parent1[parent1Index]);
-        }
-        System.out.println("");
-        for(int parent2Index = 0; parent2Index < parent2.length; parent2Index++){
-            System.out.print(" " + parent2[parent2Index]);
-        }
-
-        System.out.println("");
-        System.out.println("Offsprings");
-        for(int offspring1Index = 0;
-            offspring1Index < offspring1.length; offspring1Index++){
-            System.out.print(" " + offspring1[offspring1Index]);
-        }
-
-        System.out.println("");
-        for(int offspring2Index = 0;
-            offspring2Index < offspring2.length; offspring2Index++){
-            System.out.print(" " + offspring2[offspring2Index]);
-        }
-        System.out.println("");
     }
 }

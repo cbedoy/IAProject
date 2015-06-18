@@ -10,7 +10,7 @@ import java.util.List;
  * Created by Carlos Bedoy on 17/06/2015.
  *
  */
-public class InitialPopulation
+public class InitialPopulationBuilder
 {
     //FINAL VARIABLES
     private final int   POPULATION_SIZE     = 100;
