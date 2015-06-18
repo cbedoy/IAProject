@@ -1,9 +1,8 @@
 package self.cbedoy.models;
 
-import self.cbedoy.Main;
-
 /**
  * Created by Carlos Bedoy on 27/05/2015.
+ *
  */
 public class City extends Object
 {

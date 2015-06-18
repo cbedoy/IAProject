@@ -1,4 +1,6 @@
-package self.cbedoy.services;
+package self.cbedoy.builders;
+
+import java.util.Random;
 
 /**
  * Created by Carlos Bedoy on 19/05/2015.
@@ -13,8 +15,6 @@ public class PMXBuilder
     private int[] segment2;
     private int   cutPoint1;
     private int   cutPoint2;
-    private LinealRandomService firstGenerator;
-    private LinealRandomService secondGenerator;
 
     public PMXBuilder(int [] parent1, int [] parent2){
         this.parent1 = new int[parent1.length];
@@ -23,8 +23,8 @@ public class PMXBuilder
             this.parent1[index] = parent1[index];
             this.parent2[index] = parent2[index];
         }
-        firstGenerator  = new LinealRandomService();
-        secondGenerator = new LinealRandomService();
+        Random firstRNum  = new Random();
+        Random secondRNum = new Random();
 
         // special value randomNo_Boundray required
         // as firstRNum.nextInt(parent1.length) generates a random number
@@ -34,13 +34,13 @@ public class PMXBuilder
         int randomNo_Boundary = (parent1.length) - 1;
         offspring1 = new int[parent1.length];
         offspring2 = new int[parent2.length];
-        cutPoint1 = firstGenerator.getValue(randomNo_Boundary);
-        cutPoint2 = secondGenerator.getValue(randomNo_Boundary);
-        while(cutPoint1 == cutPoint2){
+        cutPoint1 = firstRNum.nextInt(randomNo_Boundary);
+        cutPoint2 = secondRNum.nextInt(randomNo_Boundary);
+        while (cutPoint1 == cutPoint2){
             // Make sure cutPoints are not identical to each other //
-            cutPoint2 = secondGenerator.getValue(randomNo_Boundary);
+            cutPoint2 = secondRNum.nextInt(randomNo_Boundary);
         }
-        if(cutPoint1 > cutPoint2){
+        if (cutPoint1 > cutPoint2){
             int temp = cutPoint1;    // Make sure CutPoint1 is greater than
             cutPoint1 = cutPoint2;    // cutPoint2 //
             cutPoint2 = temp;
@@ -87,6 +87,7 @@ public class PMXBuilder
     }
 
     private void create_Segments(int cutPoint1, int cutPoint2){
+        System.out.println("Created segments");
         int capacity_ofSegments = (cutPoint2 - cutPoint1) + 1;
         segment1 = new int[capacity_ofSegments];
         segment2 = new int[capacity_ofSegments];
@@ -113,6 +114,7 @@ public class PMXBuilder
 
     // offspring2 gets segment 1, offspring1 gets segment2 //
     public void crossOver(int [] offspring, int[] parentX, int[] parentY){
+        System.out.println("Crossover");
         if(offspring == offspring1){
             int[] segment = segment2;
             insert_Segments(offspring, segment);
@@ -164,5 +166,4 @@ public class PMXBuilder
         }
         System.out.println("");
     }
-
 }
