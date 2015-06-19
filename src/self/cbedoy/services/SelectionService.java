@@ -14,8 +14,7 @@ public class SelectionService
     private int[][] POPULATION_MATRIX;
     private float[] DISTANCE_VECTOR;
 
-    private int[] bestParentOne;
-    private int[] bestParentTwo;
+    private List<KeyValue> keyValueList;
 
     public void setDistanceVector(float[] DISTANCE_VECTOR) {
         this.DISTANCE_VECTOR = DISTANCE_VECTOR;
@@ -30,38 +29,41 @@ public class SelectionService
     }
 
     private void initBestDistanceSelection() {
-        List<KeyValue> keyValueList = new ArrayList<KeyValue>();
+        List<KeyValue> listToSort = new ArrayList<KeyValue>();
         for (int index = 0 ; index<DISTANCE_VECTOR.length; index++){
             KeyValue keyValue = new KeyValue();
             keyValue.distance = DISTANCE_VECTOR[index];
-            keyValue.index = index;
-            keyValueList.add(keyValue);
+            keyValue.chromosome = POPULATION_MATRIX[index];
+            listToSort.add(keyValue);
         }
-        Collections.sort(keyValueList, new Comparator<KeyValue>() {
+        Collections.sort(listToSort, new Comparator<KeyValue>() {
             @Override
             public int compare(KeyValue o1, KeyValue o2) {
                 return o1.distance.compareTo(o2.distance);
             }
         });
-        KeyValue keyValueA = keyValueList.get(0);
-        KeyValue keyValueB = keyValueList.get(1);
-
-        bestParentOne = POPULATION_MATRIX[keyValueA.index];
-
-        bestParentTwo = POPULATION_MATRIX[keyValueB.index];
-
+        keyValueList = new ArrayList<KeyValue>();
+        for(int index = 0; index < DISTANCE_VECTOR.length / 2; index++) {
+            keyValueList.add(listToSort.get(index));
+        }
     }
 
-    public int[] getBestParentOne() {
-        return bestParentOne;
-    }
-
-    public int[] getBestParentTwo() {
-        return bestParentTwo;
+    public int[] popChromosome(){
+        if(keyValueList.size() > 0){
+            KeyValue keyValue = keyValueList.get(0);
+            int[] chromosome = keyValue.chromosome;
+            keyValueList.remove(0);
+            return chromosome;
+        }
+        return null;
     }
 
     private class KeyValue{
         public Float distance;
-        public Integer index;
+        public int[] chromosome;
+    }
+
+    public boolean hasChromosomes(){
+        return keyValueList.size() > 0;
     }
 }

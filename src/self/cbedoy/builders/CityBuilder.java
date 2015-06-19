@@ -62,6 +62,10 @@ public class CityBuilder
 
     }
 
+    public int getSize(){
+        return mCityList.size();
+    }
+
     public List<City> getCityList() {
         return mCityList;
     }
