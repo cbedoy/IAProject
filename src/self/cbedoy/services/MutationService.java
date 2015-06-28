@@ -8,12 +8,12 @@ import java.util.Random;
 public class MutationService
 {
     private int MUTATION_BIT_ONE = 8;
-    private int MUTATION_BIT_TWO = 18;
+    private int MUTATION_BIT_TWO = 16;
 
     public int[] mutateChromosome(int[] chromosome){
 
-        MUTATION_BIT_ONE = new Random().nextInt(24) + 1;
-        MUTATION_BIT_TWO = new Random().nextInt(24) + 1;
+        //MUTATION_BIT_ONE = new Random().nextInt(24) + 1;
+        //MUTATION_BIT_TWO = new Random().nextInt(24) + 1;
 
         int BIT_ONE = chromosome[MUTATION_BIT_ONE];
         int BIT_TWO = chromosome[MUTATION_BIT_TWO];

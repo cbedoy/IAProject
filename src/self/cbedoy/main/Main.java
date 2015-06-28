@@ -61,7 +61,7 @@ public class Main
             int[] bestParentTwo = selectionService.popChromosome();
 
             /**Print Best Choromoso**/
-            Utils.printChromosomeWithTitleAndDistance(bestParentOne, "Best Chromosome!!", cityBuilder);
+            Utils.printChromosomeWithTitleAndDistance(bestParentOne, "Best Chromosome on Generation ("+GENERATION + 1+") !!", cityBuilder);
             //Utils.printChromosomeWithTitle(bestParentOne, "Best Parent One before cut point");
             //Utils.printChromosomeWithTitle(bestParentTwo, "Best Parent Two before cut point");
 
@@ -69,21 +69,25 @@ public class Main
             bestParentTwo = Utils.removeOnesFromChromosome(bestParentTwo);
 
             /**Determine and generate cut point**/
-            PMXBuilder pmxBuilder = new PMXBuilder(bestParentOne, bestParentTwo);
+            PMXBuilder pmxBuilder;
+
+            pmxBuilder = new PMXBuilder(bestParentOne, bestParentTwo);
 
             /**Obtain offspring One and Two**/
-            int[] offspringOne = pmxBuilder.getOffspringOne();
-            int[] offspringTwo = pmxBuilder.getOffspringTwo();
+            int[] offspringA = pmxBuilder.getOffspringOne();
+            int[] offspringB = pmxBuilder.getOffspringTwo();
 
-            offspringOne = Utils.fillWithLessOnesToChromosome(offspringOne);
-            offspringTwo = Utils.fillWithLessOnesToChromosome(offspringTwo);
+            pmxBuilder = new PMXBuilder(bestParentOne, bestParentTwo);
 
-            bestParentOne = Utils.fillWithLessOnesToChromosome(bestParentOne);
-            bestParentTwo = Utils.fillWithLessOnesToChromosome(bestParentTwo);
+            /**Obtain offspring One and Two**/
+            int[] offspringC = pmxBuilder.getOffspringOne();
+            int[] offspringD = pmxBuilder.getOffspringTwo();
 
-            /**Print chromosomes**/
-            //Utils.printChromosomeWithTitle(offspringOne, "Offspring One Generated with PMX");
-            //Utils.printChromosomeWithTitle(offspringTwo, "Offspring Two Generated with PMX");
+            offspringA = Utils.fillWithLessOnesToChromosome(offspringA);
+            offspringB = Utils.fillWithLessOnesToChromosome(offspringB);
+            offspringC = Utils.fillWithLessOnesToChromosome(offspringC);
+            offspringD = Utils.fillWithLessOnesToChromosome(offspringD);
+
 
             MutationService mutationService = new MutationService();
 
@@ -91,32 +95,40 @@ public class Main
             newPopulationService.setMutationService(mutationService);
             newPopulationService.setCityBuilder(cityBuilder);
             newPopulationService.initNewPopulation();
-            newPopulationService.addChromosome(bestParentOne);
-            newPopulationService.addChromosome(bestParentTwo);
-            newPopulationService.addChromosome(offspringOne);
-            newPopulationService.addChromosome(offspringTwo);
+            newPopulationService.addChromosome(offspringA);
+            newPopulationService.addChromosome(offspringB);
+            newPopulationService.addChromosome(offspringC);
+            newPopulationService.addChromosome(offspringD);
 
             while (selectionService.hasChromosomes())
             {
                 int[] nextChromosomeOne = selectionService.popChromosome();
                 int[] nextChromosomeTwo = selectionService.popChromosome();
 
-                newPopulationService.addChromosome(nextChromosomeOne);
-                newPopulationService.addChromosome(nextChromosomeTwo);
-
                 nextChromosomeOne = Utils.removeOnesFromChromosome(nextChromosomeOne);
                 nextChromosomeTwo = Utils.removeOnesFromChromosome(nextChromosomeTwo);
 
-                PMXBuilder pmx = new PMXBuilder(nextChromosomeOne, nextChromosomeTwo);
+                PMXBuilder pmx;
 
-                int[] nextOffspringOne = pmx.getOffspringOne();
-                int[] nextOffspringTwo = pmx.getOffspringTwo();
+                pmx = new PMXBuilder(nextChromosomeOne, nextChromosomeTwo);
 
-                nextOffspringOne = Utils.fillWithLessOnesToChromosome(nextOffspringOne);
-                nextOffspringTwo = Utils.fillWithLessOnesToChromosome(nextOffspringTwo);
+                int[] nextOffspringA = pmx.getOffspringOne();
+                int[] nextOffspringB = pmx.getOffspringTwo();
 
-                newPopulationService.addChromosome(nextOffspringOne);
-                newPopulationService.addChromosome(nextOffspringTwo);
+                pmx = new PMXBuilder(nextChromosomeOne, nextChromosomeTwo);
+
+                int[] nextOffspringC = pmx.getOffspringOne();
+                int[] nextOffspringD = pmx.getOffspringTwo();
+
+                nextOffspringA = Utils.fillWithLessOnesToChromosome(nextOffspringA);
+                nextOffspringB = Utils.fillWithLessOnesToChromosome(nextOffspringB);
+                nextOffspringC = Utils.fillWithLessOnesToChromosome(nextOffspringC);
+                nextOffspringD = Utils.fillWithLessOnesToChromosome(nextOffspringD);
+
+                newPopulationService.addChromosome(nextOffspringA);
+                newPopulationService.addChromosome(nextOffspringB);
+                newPopulationService.addChromosome(nextOffspringC);
+                newPopulationService.addChromosome(nextOffspringD);
             }
 
             newPopulationService.mutateAnyChromosome();
